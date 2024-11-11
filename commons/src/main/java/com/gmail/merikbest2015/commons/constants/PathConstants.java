@@ -162,10 +162,13 @@ public class PathConstants {
 
     public static final String LOCALIZATION = "/localization";
     public static final String UI_V1_LOCALIZATION = UI_V1 + LOCALIZATION;
+    public static final String API_V1_LOCALIZATION = API_V1 + LOCALIZATION;
     public static final String COUNTRY_CODES = "/country/codes";
     public static final String GIF_IMAGES = "/gif/images";
     public static final String LANGUAGES = "/languages";
     public static final String WALLPAPERS = "/wallpapers";
+    public static final String PHONE_CODE = "/phone/{code}";
+    public static final String WALLPAPER = "/wallpaper";
 
     public static final String API_V1_WEBSOCKET = API_V1 + "/websocket";
 }

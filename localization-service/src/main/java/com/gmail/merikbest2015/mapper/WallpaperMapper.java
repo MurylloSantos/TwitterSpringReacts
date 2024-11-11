@@ -17,7 +17,12 @@ public class WallpaperMapper {
     private final WallpaperService wallpaperService;
 
     public List<WallpaperResponse> getWallpapers() {
-        List<Wallpaper> languages = wallpaperService.getWallpapers();
-        return basicMapper.convertToResponseList(languages,WallpaperResponse.class);
+        List<Wallpaper> wallpapers = wallpaperService.getWallpapers();
+        return basicMapper.convertToResponseList(wallpapers, WallpaperResponse.class);
+    }
+
+    public WallpaperResponse getWallpaper() {
+        Wallpaper wallpaper = wallpaperService.getWallpaper();
+        return basicMapper.convertToResponse(wallpaper, WallpaperResponse.class);
     }
 }

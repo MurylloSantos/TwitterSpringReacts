@@ -17,7 +17,7 @@ public class GifImageMapper {
     private final GifImageService gifImageService;
 
     public List<GifImageResponse> getGifImages() {
-        List<GifImage> countryCodes = gifImageService.getGifImages();
-        return basicMapper.convertToResponseList(countryCodes, GifImageResponse.class);
+        List<GifImage> gifImages = gifImageService.getGifImages();
+        return basicMapper.convertToResponseList(gifImages, GifImageResponse.class);
     }
 }

@@ -18,4 +18,9 @@ public class WallpaperServiceImpl implements WallpaperService {
     public List<Wallpaper> getWallpapers() {
         return wallpaperRepository.findAll();
     }
+
+    @Override
+    public Wallpaper getWallpaper() {
+        return wallpaperRepository.getWallpaper();
+    }
 }

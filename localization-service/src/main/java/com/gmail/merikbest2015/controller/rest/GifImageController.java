@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.dto.response.GifImageResponse;

@@ -1,8 +1,8 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
-import com.gmail.merikbest2015.dto.response.LanguagesResponse;
-import com.gmail.merikbest2015.mapper.LanguageMapper;
+import com.gmail.merikbest2015.dto.response.WallpaperResponse;
+import com.gmail.merikbest2015.mapper.WallpaperMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +14,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(PathConstants.UI_V1_LOCALIZATION)
-public class LanguageController {
+public class WallpaperController {
 
-    private final LanguageMapper getGifImages;
+    private final WallpaperMapper wallpaperMapper;
 
-    @GetMapping(PathConstants.LANGUAGES)
-    public ResponseEntity<List<LanguagesResponse>> getLanguages() {
-        return ResponseEntity.ok(getGifImages.getLanguages());
+    @GetMapping(PathConstants.WALLPAPERS)
+    public ResponseEntity<List<WallpaperResponse>> getWallpapers() {
+        return ResponseEntity.ok(wallpaperMapper.getWallpapers());
     }
 }
