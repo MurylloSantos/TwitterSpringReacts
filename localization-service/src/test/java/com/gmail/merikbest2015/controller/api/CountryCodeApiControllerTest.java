@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,20 +20,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Sql(value = {"/sql-test/clear-localization-db.sql", "/sql-test/populate-localization-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-localization-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class CountryCodeControllerTest {
+public class CountryCodeApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("[200] GET /ui/v1/localization/country/codes - Get country codes")
-    public void getCountryCodes() throws Exception {
-        mockMvc.perform(get(PathConstants.UI_V1_LOCALIZATION + PathConstants.COUNTRY_CODES))
+    @DisplayName("[200] GET /api/v1/localization/phone/code - Is Phone Code Exists")
+    public void isPhoneCodeExists() throws Exception {
+        mockMvc.perform(get(PathConstants.API_V1_LOCALIZATION + PathConstants.PHONE_CODE, "+374"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(10)))
-                .andExpect(jsonPath("$[9].id").value(10L))
-                .andExpect(jsonPath("$[9].countryCode").value("AM"))
-                .andExpect(jsonPath("$[9].phoneCode").value("+374"))
-                .andExpect(jsonPath("$[9].country").value("Armenia"));
+                .andExpect(jsonPath("$", is(true)));
     }
 }

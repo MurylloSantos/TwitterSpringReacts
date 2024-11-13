@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -20,18 +20,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Sql(value = {"/sql-test/clear-localization-db.sql", "/sql-test/populate-localization-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-localization-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class LanguageControllerTest {
+public class CountryCodeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("[200] GET /ui/v1/localization/languages - Get languages")
-    public void getLanguages() throws Exception {
-        mockMvc.perform(get(PathConstants.UI_V1_LOCALIZATION + PathConstants.LANGUAGES))
+    @DisplayName("[200] GET /ui/v1/localization/country/codes - Get country codes")
+    public void getCountryCodes() throws Exception {
+        mockMvc.perform(get(PathConstants.UI_V1_LOCALIZATION + PathConstants.COUNTRY_CODES))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$[9].id").value(10L))
-                .andExpect(jsonPath("$[9].language").value("Danish - dansk"));
+                .andExpect(jsonPath("$[9].countryCode").value("AM"))
+                .andExpect(jsonPath("$[9].phoneCode").value("+374"))
+                .andExpect(jsonPath("$[9].country").value("Armenia"));
     }
 }
