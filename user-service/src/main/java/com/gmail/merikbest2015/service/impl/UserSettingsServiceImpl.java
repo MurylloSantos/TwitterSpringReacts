@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.client.LocalizationClient;
 import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -8,7 +9,6 @@ import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.model.UserRole;
-import com.gmail.merikbest2015.repository.CountryCodeRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -29,9 +29,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final UserSettingsRepository userSettingsRepository;
-    private final CountryCodeRepository countryCodeRepository;
     private final JwtProvider jwtProvider;
     private final UpdateUserProducer updateUserProducer;
+    private final LocalizationClient localizationClient;
 
     @Override
     @Transactional
@@ -67,7 +67,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (phoneLength < 6 || phoneLength > 10) {
             throw new ApiRequestException(UserErrorMessage.INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
-        if (!countryCodeRepository.isPhoneCodeExists(phoneCode)) {
+        if (!localizationClient.isPhoneCodeExists(phoneCode)) {
             throw new ApiRequestException(UserErrorMessage.PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
