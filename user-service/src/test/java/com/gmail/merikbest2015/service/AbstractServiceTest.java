@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.broker.producer.*;
+import com.gmail.merikbest2015.client.LocalizationClient;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.client.TweetClient;
@@ -36,12 +37,6 @@ public abstract class AbstractServiceTest {
 
     @MockBean
     MuteUserRepository muteUserRepository;
-
-    @MockBean
-    CountryCodeRepository countryCodeRepository;
-
-    @MockBean
-    LanguageRepository languageRepository;
 
     @MockBean
     UserSettingsRepository userSettingsRepository;
@@ -81,6 +76,9 @@ public abstract class AbstractServiceTest {
 
     @MockBean
     TagClient tagClient;
+
+    @MockBean
+    LocalizationClient localizationClient;
 
     static final PageRequest pageable = PageRequest.of(0, 20);
     static final List<Long> ids = List.of(1L, 2L, 3L);

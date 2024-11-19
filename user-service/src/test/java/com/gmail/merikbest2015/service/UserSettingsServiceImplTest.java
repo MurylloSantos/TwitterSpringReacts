@@ -77,7 +77,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void updatePhoneNumber_ShouldReturnUpdatedPhone() {
-        when(countryCodeRepository.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(true);
+        when(localizationClient.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(true);
         assertEquals(Map.of("phoneCode", TestConstants.PHONE_CODE, "phoneNumber", TestConstants.PHONE_NUMBER),
                 userSettingsService.updatePhoneNumber(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER));
         verify(userSettingsRepository, times(1))
@@ -86,7 +86,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void updatePhoneNumber_ShouldPhoneCodeNotFound() {
-        when(countryCodeRepository.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(false);
+        when(localizationClient.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updatePhoneNumber(TestConstants.COUNTRY_CODE, TestConstants.PHONE_NUMBER));
         assertEquals(UserErrorMessage.PHONE_CODE_NOT_FOUND, exception.getMessage());
