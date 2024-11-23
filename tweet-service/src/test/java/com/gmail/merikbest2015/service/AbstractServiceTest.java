@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.broker.producer.TagProducer;
 import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
-import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.client.ListsClient;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.*;
@@ -69,7 +69,7 @@ public abstract class AbstractServiceTest {
     @Before
     public void setUp() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
+        mockRequest.addHeader(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

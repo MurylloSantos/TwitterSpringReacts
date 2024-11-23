@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.commons.constants.ErrorMessage;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.constants.TweetSuccessMessage;
@@ -40,7 +41,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets - Get tweets")
     public void getTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(8)))
                 .andExpect(jsonPath("$[0].id").value(48L))
@@ -73,7 +74,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/pinned/user/2 - Get pinned tweet by user id")
     public void getPinnedTweetByUserId() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.PINNED_TWEET_USER_ID, 2)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(40L))
                 .andExpect(jsonPath("$.text").value("test tweet"))
@@ -106,7 +107,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/pinned/user/1 - Should returns null")
     public void getPinnedTweetByUserId_ShouldReturnNull() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.PINNED_TWEET_USER_ID, 1)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk());
     }
 
@@ -114,7 +115,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/pinned/user/3 - Should user have private profile")
     public void getPinnedTweetByUserId_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.PINNED_TWEET_USER_ID, 3)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -123,7 +124,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/pinned/user/6 - Should User blocked")
     public void getPinnedTweetByUserId_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.PINNED_TWEET_USER_ID, 6)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -132,7 +133,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/43 - Get tweet by id")
     public void getTweetById() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
@@ -165,7 +166,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/99 - Should Not Found tweet by id")
     public void getTweetById_ShouldNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -174,7 +175,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/49 - Should tweet deleted")
     public void getTweetById_ShouldTweetDeleted() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
@@ -183,7 +184,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/50 - Should user have private profile")
     public void getTweetById_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -192,7 +193,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/51 - Should User blocked")
     public void getTweetById_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -201,7 +202,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/user/2 - Get user tweets by id")
     public void getUserTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.USER_USER_ID, TestConstants.USER_ID)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(7)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -234,7 +235,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/user/99 - Should user Not Found by id")
     public void getUserTweets_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.USER_USER_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -243,7 +244,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/user/3 - Should user have private profile")
     public void getUserTweets_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.USER_USER_ID, 3)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -252,7 +253,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/user/6 - Should User blocked")
     public void getUserTweets_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.USER_USER_ID, 6)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -261,7 +262,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/media/user/2 - Get user media tweets by id")
     public void getUserMediaTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.MEDIA_USER_USER_ID, TestConstants.USER_ID)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(42L))
@@ -295,7 +296,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/media/user/99 - Should user Not Found by id")
     public void getUserMediaTweets_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.MEDIA_USER_USER_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -304,7 +305,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/media/user/3 - Should user have private profile")
     public void getUserMediaTweets_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.MEDIA_USER_USER_ID, 3)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -313,7 +314,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/media/user/6 - Should User blocked")
     public void getUserMediaTweets_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.MEDIA_USER_USER_ID, 6)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -322,7 +323,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/images/1 - Get user tweets with images")
     public void getUserTweetImages() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.IMAGES_USER_ID, 1)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].tweetId").value(45L))
@@ -334,7 +335,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/images/99 - Should user Not Found by id")
     public void getUserTweetImages_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.IMAGES_USER_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -343,7 +344,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/images/3 - Should user have private profile")
     public void getUserTweetImages_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.IMAGES_USER_ID, 3)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -352,7 +353,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/images/6 - Should User blocked")
     public void getUserTweetImages_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.IMAGES_USER_ID, 6)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -361,7 +362,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/43/info - Get tweet additional info by id")
     public void getTweetAdditionalInfoById() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_INFO, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
                 .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
@@ -378,7 +379,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/99/info - Should Not Found tweet by id")
     public void getTweetAdditionalInfoById_ShouldNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_INFO, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -387,7 +388,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/49/info - Should tweet deleted")
     public void getTweetAdditionalInfoById_ShouldTweetDeleted() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_INFO, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
@@ -396,7 +397,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/50/info - Should user have private profile")
     public void getTweetAdditionalInfoById_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_INFO, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -405,7 +406,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/51/info - Should User blocked")
     public void getTweetAdditionalInfoById_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_INFO, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -414,7 +415,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/40/replies - Get Replies By Tweet Id")
     public void getRepliesByTweetId() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_REPLIES, 40)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(41L))
@@ -448,7 +449,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/99/replies - Should Not Found tweet by id")
     public void getRepliesByTweetId_ShouldNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_REPLIES, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -457,7 +458,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/49/replies - Should tweet deleted")
     public void getRepliesByTweetId_ShouldTweetDeleted() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_REPLIES, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
@@ -466,7 +467,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/50/replies - Should user have private profile")
     public void getRepliesByTweetId_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_REPLIES, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -475,7 +476,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/49/replies - Should User blocked")
     public void getRepliesByTweetId_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_REPLIES, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -484,7 +485,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/40/quotes - Get Quotes By Tweet Id")
     public void getQuotesByTweetId() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_QUOTES, 40)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(45L))
@@ -518,7 +519,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/99/quotes - Should Not Found tweet by id")
     public void getQuotesByTweetId_ShouldNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_QUOTES, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -527,7 +528,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/49/quotes - Should tweet deleted")
     public void getQuotesByTweetId_ShouldTweetDeleted() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_QUOTES, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
@@ -536,7 +537,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/50/quotes - Should user have private profile")
     public void getQuotesByTweetId_ShouldUserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_QUOTES, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -545,7 +546,7 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/51/quotes - Should User blocked")
     public void getQuotesByTweetId_ShouldUserBlocked() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_QUOTES, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -554,7 +555,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/media - Get media tweets")
     public void getMediaTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.MEDIA)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(45L))
@@ -588,7 +589,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/video - Get tweets with video")
     public void getTweetsWithVideo() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.VIDEO)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(42L))
@@ -622,7 +623,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/follower - Get followers tweets")
     public void getFollowersTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.FOLLOWER)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(45L))
@@ -656,7 +657,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/image/tagged/45 - Get tagged image users")
     public void getTaggedImageUsers() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.IMAGE_TAGGED, 45)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -679,7 +680,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -694,7 +695,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -709,7 +710,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -748,7 +749,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -787,7 +788,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -827,7 +828,7 @@ public class TweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -864,7 +865,7 @@ public class TweetControllerTest {
     @DisplayName("[200] DELETE /ui/v1/tweets/40 - Delete Tweet")
     public void deleteTweet() throws Exception {
         mockMvc.perform(delete(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 40)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED)));
     }
@@ -873,7 +874,7 @@ public class TweetControllerTest {
     @DisplayName("[404] DELETE /ui/v1/tweets/99 - Should Tweet Not Found by id")
     public void deleteTweet_ShouldTweetNotFoundById() throws Exception {
         mockMvc.perform(delete(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -882,7 +883,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/search/test - Search tweets by text")
     public void searchTweets() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.SEARCH_TEXT, "test")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(4)));
     }
@@ -895,7 +896,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -915,7 +916,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -930,7 +931,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -945,7 +946,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -960,7 +961,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -974,7 +975,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test quote");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.QUOTE_USER_ID_TWEET_ID, 2, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -1015,7 +1016,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test quote");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.QUOTE_USER_ID_TWEET_ID, 2, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -1029,7 +1030,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.QUOTE_USER_ID_TWEET_ID, 2, 49)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -1043,7 +1044,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.QUOTE_USER_ID_TWEET_ID, 2, 50)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -1057,7 +1058,7 @@ public class TweetControllerTest {
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.QUOTE_USER_ID_TWEET_ID, 2, 51)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -1068,7 +1069,7 @@ public class TweetControllerTest {
     @DisplayName("[200] GET /ui/v1/tweets/reply/change/2/43 - Change Tweet reply type by id")
     public void changeTweetReplyType() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_CHANGE_USER_ID_TWEET_ID, 2, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
@@ -1102,7 +1103,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/reply/change/2/99 - Should Tweet Not Found by id")
     public void changeTweetReplyType_ShouldTweetNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_CHANGE_USER_ID_TWEET_ID, 2, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
@@ -1112,7 +1113,7 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/reply/change/2/41 - Should Tweet Not Found by user")
     public void changeTweetReplyType_ShouldTweetNotFoundByUser() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.REPLY_CHANGE_USER_ID_TWEET_ID, 2, 41)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));

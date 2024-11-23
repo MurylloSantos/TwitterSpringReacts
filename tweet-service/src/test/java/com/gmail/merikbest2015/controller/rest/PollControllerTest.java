@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
@@ -51,7 +52,7 @@ public class PollControllerTest {
         tweetRequest.setPollDateTime(100L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.POLL)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -96,7 +97,7 @@ public class PollControllerTest {
         tweetRequest.setPollDateTime(100L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.POLL)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -119,7 +120,7 @@ public class PollControllerTest {
         tweetRequest.setPollDateTime(100L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.POLL)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -139,7 +140,7 @@ public class PollControllerTest {
         tweetRequest.setPollDateTime(100L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.POLL)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -159,7 +160,7 @@ public class PollControllerTest {
         tweetRequest.setPollDateTime(100L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.POLL)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -175,7 +176,7 @@ public class PollControllerTest {
         voteRequest.setPollChoiceId(9L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.VOTE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -218,7 +219,7 @@ public class PollControllerTest {
         voteRequest.setPollChoiceId(3L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.VOTE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -234,7 +235,7 @@ public class PollControllerTest {
         voteRequest.setPollChoiceId(99L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.VOTE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -250,7 +251,7 @@ public class PollControllerTest {
         voteRequest.setPollChoiceId(9L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.VOTE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -266,7 +267,7 @@ public class PollControllerTest {
         voteRequest.setPollChoiceId(11L);
 
         mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.VOTE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())

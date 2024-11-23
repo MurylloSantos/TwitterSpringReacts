@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.repository.TopicRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -26,7 +26,7 @@ public abstract class AbstractServiceTest {
     @Before
     public void setUp() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
+        mockRequest.addHeader(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

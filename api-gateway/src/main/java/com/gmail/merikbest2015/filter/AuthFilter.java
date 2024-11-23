@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.filter;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.dto.response.user.UserPrincipalResponse;
 import com.gmail.merikbest2015.commons.security.JwtAuthenticationException;
 import com.gmail.merikbest2015.commons.security.JwtProvider;
@@ -43,7 +44,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 }
                 exchange.getRequest()
                         .mutate()
-                        .header(AUTH_USER_ID_HEADER, String.valueOf(user.getId()))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, String.valueOf(user.getId()))
                         .build();
                 return chain.filter(exchange);
             } else {

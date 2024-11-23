@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.broker.consumer;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.KafkaTopicConstants;
-import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.event.BlockUserEvent;
 import com.gmail.merikbest2015.commons.event.FollowUserEvent;
 import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
@@ -23,12 +23,12 @@ public class UserConsumer {
     }
 
     @KafkaListener(topics = KafkaTopicConstants.BLOCK_USER_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
-    public void userBlockListener(BlockUserEvent blockUserEvent, @Header(PathConstants.AUTH_USER_ID_HEADER) String authId) {
+    public void userBlockListener(BlockUserEvent blockUserEvent, @Header(HeaderConstants.AUTH_USER_ID_HEADER) String authId) {
         userHandlerService.handleBlockUser(blockUserEvent, authId);
     }
 
     @KafkaListener(topics = KafkaTopicConstants.FOLLOW_USER_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
-    public void userFollowListener(FollowUserEvent followUserEvent, @Header(PathConstants.AUTH_USER_ID_HEADER) String authId) {
+    public void userFollowListener(FollowUserEvent followUserEvent, @Header(HeaderConstants.AUTH_USER_ID_HEADER) String authId) {
         userHandlerService.handleFollowUser(followUserEvent, authId);
     }
 }

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
@@ -32,7 +33,7 @@ public class BlockUserControllerTest {
     @DisplayName("[200] GET /ui/v1/user/blocked - Get blocked users")
     public void getBlockList() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.BLOCKED)
-                .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(4L))
@@ -48,7 +49,7 @@ public class BlockUserControllerTest {
     @DisplayName("[200] GET /ui/v1/user/blocked/3 - Add user to block list by id")
     public void addToBlockList() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.BLOCKED_USER_ID, 3)
-                .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
     }
@@ -57,7 +58,7 @@ public class BlockUserControllerTest {
     @DisplayName("[200] GET /ui/v1/user/blocked/4 - Remove user from block list by id")
     public void removeFromBlockList() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.BLOCKED_USER_ID,4)
-                .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
     }
@@ -66,7 +67,7 @@ public class BlockUserControllerTest {
     @DisplayName("[404] GET /ui/v1/user/blocked/99 - Should user Not Found by id")
     public void processBlockList_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.BLOCKED_USER_ID, 99)
-                .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }

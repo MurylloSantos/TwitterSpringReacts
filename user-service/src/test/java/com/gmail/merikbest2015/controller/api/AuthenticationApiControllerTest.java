@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
@@ -31,7 +32,7 @@ public class AuthenticationApiControllerTest {
     @DisplayName("[200] GET /api/v1/auth/user/test2015@test.test - Get user principal by email")
     public void getUserPrincipalByEmail() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_AUTH + PathConstants.USER_EMAIL, "test2015@test.test")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(TestConstants.USER_ID))
                 .andExpect(jsonPath("$.email").value(TestConstants.USER_EMAIL))
@@ -42,7 +43,7 @@ public class AuthenticationApiControllerTest {
     @DisplayName("[404] GET /api/v1/auth/user/test9999@test.test - Should user principal Not Found by email")
     public void getUserPrincipalByEmail_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_AUTH + PathConstants.USER_EMAIL, "test9999@test.test")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }

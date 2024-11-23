@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.commons.constants.HeaderConstants.AUTH_USER_ID_HEADER;
 
 @Component
 @RequiredArgsConstructor

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +30,7 @@ public class ListsApiControllerTest {
     @DisplayName("[200] GET /api/v1/lists/tweet/4 - Get tweet list by id")
     public void getTweetList() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_LISTS + PathConstants.TWEET_LIST_ID, 4)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))

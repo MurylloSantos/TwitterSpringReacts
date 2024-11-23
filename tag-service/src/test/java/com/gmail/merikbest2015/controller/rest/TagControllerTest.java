@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -31,7 +32,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags - Get all tags")
     public void getTags() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TAGS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -43,7 +44,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags/trends - Get trends")
     public void getTrends() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TAGS + PathConstants.TRENDS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -56,7 +57,7 @@ public class TagControllerTest {
     public void getTweetsByTag() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_TAGS + PathConstants.SEARCH)
                         .param("tagName", "#JetBrains")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(43L))

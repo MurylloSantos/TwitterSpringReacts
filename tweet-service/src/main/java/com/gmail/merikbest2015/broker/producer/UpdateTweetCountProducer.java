@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.broker.producer;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.KafkaTopicConstants;
-import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.event.UpdateTweetCountEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -33,7 +33,7 @@ public class UpdateTweetCountProducer {
         ProducerRecord<String, UpdateTweetCountEvent> producerRecord = new ProducerRecord<>(
                 topic,
                 new UpdateTweetCountEvent(hasUpdateTweetsCount));
-        producerRecord.headers().add(PathConstants.AUTH_USER_ID_HEADER, authUserId.toString().getBytes());
+        producerRecord.headers().add(HeaderConstants.AUTH_USER_ID_HEADER, authUserId.toString().getBytes());
         return producerRecord;
     }
 }

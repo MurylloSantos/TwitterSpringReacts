@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
@@ -134,7 +134,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Long getUserId() {
         RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
-        return Long.parseLong(request.getHeader(PathConstants.AUTH_USER_ID_HEADER));
+        return Long.parseLong(request.getHeader(HeaderConstants.AUTH_USER_ID_HEADER));
     }
 
     private void checkMatchPasswords(String password, String password2) {

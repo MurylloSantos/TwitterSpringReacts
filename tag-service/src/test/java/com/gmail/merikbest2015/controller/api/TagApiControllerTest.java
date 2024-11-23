@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ public class TagApiControllerTest {
     @DisplayName("[200] GET /api/v1/tags/search/test - Get tags by text")
     public void getTagsByText() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_TAGS + PathConstants.SEARCH_TEXT, "test")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0]").value("#test"));

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.commons.mapper;
 
-import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,7 +39,7 @@ public class BasicMapper {
 
     private <S> HeaderResponse<S> constructHeaderResponse(List<S> responses, Integer totalPages) {
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(PathConstants.PAGE_TOTAL_COUNT, String.valueOf(totalPages));
+        responseHeaders.add(HeaderConstants.PAGE_TOTAL_COUNT, String.valueOf(totalPages));
         return new HeaderResponse<S>(responses, responseHeaders);
     }
 }

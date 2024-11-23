@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,7 @@ public class UserApiControllerTest {
     @DisplayName("[200] GET /api/v1/user/2 - Get user by id")
     public void getUserById() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_USER + "/2")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(TestConstants.USER_ID))
                 .andExpect(jsonPath("$.fullName").value(TestConstants.USERNAME))
@@ -52,7 +53,7 @@ public class UserApiControllerTest {
     @DisplayName("[200] GET /api/v1/user/subscribers - Get users which user subscribed")
     public void getUsersWhichUserSubscribed() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_USER + PathConstants.SUBSCRIBERS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, 1L))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(TestConstants.USER_ID))
@@ -65,7 +66,7 @@ public class UserApiControllerTest {
     @DisplayName("[200] GET /api/v1/user/subscribers/ids - Get user id which user subscribed")
     public void getUserIdsWhichUserSubscribed() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_USER + PathConstants.SUBSCRIBERS_IDS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, 1L))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(2))));
     }

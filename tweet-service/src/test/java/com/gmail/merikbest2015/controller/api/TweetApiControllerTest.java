@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -42,7 +43,7 @@ public class TweetApiControllerTest {
         mockMvc.perform(post(PathConstants.API_V1_TWEETS + PathConstants.IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(40L, 41L, 42L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(3)));
     }
@@ -53,7 +54,7 @@ public class TweetApiControllerTest {
         mockMvc.perform(post(PathConstants.API_V1_TWEETS + PathConstants.USER_IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.items[*]", hasSize(7)));
     }
@@ -62,7 +63,7 @@ public class TweetApiControllerTest {
     @DisplayName("[200] GET /api/v1/tweets/43 - Get tweet by id")
     public void getTweetById() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.TWEET_ID, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
@@ -95,7 +96,7 @@ public class TweetApiControllerTest {
     @DisplayName("[200] GET /api/v1/tweets/id/43 - Is tweet exists")
     public void isTweetExists() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.ID_TWEET_ID, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
@@ -104,7 +105,7 @@ public class TweetApiControllerTest {
     @DisplayName("[200] GET /api/v1/tweets/count/test - Get tweet count by text")
     public void getTweetCountByText() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.COUNT_TEXT, "test")
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(4));
     }
@@ -113,7 +114,7 @@ public class TweetApiControllerTest {
     @DisplayName("[200] GET /api/v1/tweets/chat/43 - Get chat tweet")
     public void getChatTweet() throws Exception {
         mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.CHAT_TWEET_ID, 43)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))

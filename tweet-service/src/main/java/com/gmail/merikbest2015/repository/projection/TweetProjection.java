@@ -16,12 +16,7 @@ public interface TweetProjection {
     LocalDateTime getCreatedAt();
     LocalDateTime getScheduledDate();
     ReplyType getReplyType();
-    String getLink();
-    String getLinkTitle();
-    String getLinkDescription();
-    String getLinkCover();
     GifImageProjection getGifImage();
-    LinkCoverSize getLinkCoverSize();
     Long getListId();
     List<TweetImageProjection> getImages();
     String getImageDescription();

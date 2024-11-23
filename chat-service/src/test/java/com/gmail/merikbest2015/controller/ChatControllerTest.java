@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.commons.constants.ErrorMessage;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.ChatErrorMessage;
@@ -33,7 +34,7 @@ public class ChatControllerTest {
     @DisplayName("[200] GET /ui/v1/chat/1 - Get user chat")
     public void getChatById() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CHAT_ID, 8)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.createdAt").isNotEmpty())
@@ -47,7 +48,7 @@ public class ChatControllerTest {
     @DisplayName("[404] GET /ui/v1/chat/1 - Should chat Not Found")
     public void getChatById_ShouldChatNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CHAT_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
@@ -56,7 +57,7 @@ public class ChatControllerTest {
     @DisplayName("[200] GET /ui/v1/chat/users - Get user chats")
     public void getUserChats() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.USERS)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[0].id").value(8L))
@@ -70,7 +71,7 @@ public class ChatControllerTest {
     @DisplayName("[200] GET /ui/v1/chat/create/3 - Create chat with participant")
     public void createChat() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CREATE_USER_ID, 3)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.createdAt").isNotEmpty())
@@ -82,7 +83,7 @@ public class ChatControllerTest {
     @DisplayName("[404] GET /ui/v1/chat/create/99 - Should participant Not Found")
     public void createChat_ShouldParticipantNotFound() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CREATE_USER_ID, 99)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -91,7 +92,7 @@ public class ChatControllerTest {
     @DisplayName("[400] GET /ui/v1/chat/create/6 - Bad Request. Create chat with blocked user")
     public void createChat_BadRequest() throws Exception {
         mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CREATE_USER_ID, 6)
-                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_PARTICIPANT_BLOCKED)));
     }

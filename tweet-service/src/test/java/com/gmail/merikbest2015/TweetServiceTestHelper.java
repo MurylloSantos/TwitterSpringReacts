@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.HeaderConstants;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.commons.enums.LinkCoverSize;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -179,7 +179,7 @@ public class TweetServiceTestHelper {
 
     public static void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
+        mockRequest.addHeader(HeaderConstants.AUTH_USER_ID_HEADER, 1L);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

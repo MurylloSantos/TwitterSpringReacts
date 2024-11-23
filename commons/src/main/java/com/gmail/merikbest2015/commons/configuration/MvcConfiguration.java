@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.PAGE_TOTAL_COUNT;
+import static com.gmail.merikbest2015.commons.constants.HeaderConstants.PAGE_TOTAL_COUNT;
 
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
